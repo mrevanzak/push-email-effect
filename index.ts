@@ -131,11 +131,10 @@ Effect.runPromise(
   pipe(
     runnable,
     Effect.timeout(Duration.seconds(3)),
-    Effect.catchTag("ConfigError", (error) =>
-      Console.error("Missing config on environment", error),
-    ),
-    Effect.catchTag("TimeoutException", (error) =>
-      Console.error("3 seconds timeout reached", error),
-    ),
+    Effect.catchTags({
+      ConfigError: (error) =>
+        Console.error("Missing config on environment", error),
+      TimeoutException: () => Effect.logError("3 seconds timeout reached"),
+    }),
   ),
 );

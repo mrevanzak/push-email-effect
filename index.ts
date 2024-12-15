@@ -105,7 +105,6 @@ const program = Effect.gen(function* () {
   const postmark = yield* PostmarkService;
   const HOSTNAME = yield* Config.string("HOSTNAME");
   const FROM_EMAIL = yield* Config.string("FROM_EMAIL");
-  yield* Effect.sleep(Duration.seconds(5));
   yield* postmark
     .sendEmailWithTemplate({
       TemplateModel: {
